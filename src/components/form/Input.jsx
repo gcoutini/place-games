@@ -33,22 +33,20 @@ export default (props) => {
         }
 
     return (
-        <div>
+        
+        <div className="card-login">
             <div className="Logo">
             <img src={logo} alt="Logo"></img>
             </div>
                 <div className="Login">
                     <label>Login:</label>
-                    <div className="Login2">
-                        <input type="text" value={login} onChange={e => setLogin(e.target.value)}/>
-                    </div>
-                    <div className="password">
-                        <label>Senha:</label>
-                        <input type="password" value={password} onChange={e => setPassword(e.target.value)}/>
-                    </div>
+                    <input type="text" value={login} onChange={e => setLogin(e.target.value)}/>
+                    <label>Senha:</label>
+                    <input type="password" value={password} onChange={e => setPassword(e.target.value)}/>
                     <input type="button" value="Login" onClick={sendLogin}></input>
+                    <div className="divider"></div>
                     <input type="button" value="Cadastrar" onClick={sendSignup}></input>
-                </div>
+                    </div>
         </div>
     )
 }
