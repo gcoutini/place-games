@@ -1,0 +1,23 @@
+.Login  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    vertical-align: middle;
+    color: white;
+    font-weight: bold;
+    margin-top: 15%;
+}
+
+.Login2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
