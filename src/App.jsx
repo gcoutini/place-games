@@ -1,13 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Card from './components/layout/Card'
-import Input from './components/form/Input'
+import React, { Component } from 'react';
+import Main from './pages/Main'
+import Login from './pages/Login'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-export default (props) => (
-  <div className="App">
-    <Card teste='#fff' marginTop='120px'><h1>Área de Login</h1></Card>
-    <Card height='350px'><h1><Input></Input></h1></Card>
 
-  </div>
-)
+class App extends Component {
+
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Login}/>
+          <Route path="/main" component={Main}/>
+        </Switch>
+      </Router>
+    )
+  }
+  
+}
+
+export default App;
+
