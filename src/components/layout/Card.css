@@ -8,11 +8,8 @@
     overflow: hidden;
     background-color: #008000;
     width: 30px;
-    display: flex;
-    flex-direction: column;
     min-width: 300px;
     text-align: center;
-    vertical-align: middle;
     line-height: 30px;
     position: relative;
 }
