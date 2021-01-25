@@ -1,0 +1,11 @@
+.Panel {
+    font-family: 'BenchNine';
+    flex: 1;
+    overflow: hidden;
+    background-color: limegreen;
+    position: fixed;
+    left: 0;
+    height: 100%;
+    width: 15%;
+    line-height: 0;
+}

@@ -1,6 +1,7 @@
+
 import React, { Component } from 'react';
 import Header from '../components/layout/Header'
-import "./Main.css"
+import "./Clients.css"
 import logo from "../logo2.png"
 import Avatar from '@material-ui/core/Avatar';
 import profile from "../pp.jpg"
@@ -9,8 +10,7 @@ import { Home, People, BarChart, Delete } from '@material-ui/icons'
 import Panel from "../components/layout/Panel"
 import Card from "../components/layout/Card"
 
-class Main extends Component {
-
+class Clients extends Component {
   render() {
     return (
       <Header>
@@ -18,19 +18,17 @@ class Main extends Component {
         <div className="avatar"><Avatar src={profile}></Avatar></div>
         <Panel>
           <ol className="icon-list">
-             <IconButton onClick={() => window.location.href = "/main"}><Home></Home>Home</IconButton>
-             <IconButton onClick={() => window.location.href = "/clients"}><People></People>Clientes</IconButton>
-             <IconButton onClick={() => window.location.href = "/products"}><Delete></Delete>Produtos</IconButton>
-             <IconButton onClick={() => window.location.href = "/stock"}><Delete></Delete>Estoque</IconButton>
-             <IconButton onClick={() => window.location.href = "/data"}><BarChart></BarChart>Dados</IconButton>
+            <IconButton onClick={() => window.location.href = "/main"}><Home></Home>Home</IconButton>
+            <IconButton onClick={() => window.location.href = "/clients"}><People></People>Clientes</IconButton>
+            <IconButton onClick={() => window.location.href = "/products"}><Delete></Delete>Produtos</IconButton>
+            <IconButton onClick={() => window.location.href = "/stock"}><Delete></Delete>Estoque</IconButton>
+            <IconButton onClick={() => window.location.href = "/data"}><BarChart></BarChart>Dados</IconButton>
           </ol>
         </Panel>
-        <Card className="content">Home</Card>
+        <Card className="content">Clientes</Card>
       </Header>
       )
     }
   }
 
-export default Main;
-
-
+export default Clients;
