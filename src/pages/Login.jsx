@@ -42,10 +42,10 @@ class Login extends Component {
     });
   }
 
-  routeChange = () => {
-    let path = `/main/`;
-    this.history.push(path);
-  }
+  // routeChange = () => {
+  //   let path = `/main/`;
+  //   this.history.push(path);
+  // }
 
   render() {
     return (       
