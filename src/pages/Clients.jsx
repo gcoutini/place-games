@@ -26,16 +26,31 @@ class Clients extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  verifyClient = async e => {
+    e.preventDefault();
+    console.log(this.state);
+    const { name, cpf } = this.state;
+    const { data } = await post('http://localhost:8000/verify_client', {
+      name, cpf
+    });
+    console.log(data);
+    this.setState(data);
+    return data;
+  }
 
   registerClient = async e => {
     e.preventDefault();
     console.log(this.state);
     const { name, birth_date, cpf, tel, cel, email } = this.state;
-    const { data } = await post('http://localhost:8000/register_client', {
-      name, birth_date,cpf, tel, cel, email
-    });
-    console.log(data);
-    if(data) alert("Cliente cadastrado com sucesso!");
+    try {
+      const { data } = await post('http://localhost:8000/register_client', {
+        name, birth_date,cpf, tel, cel, email
+      });
+      console.log(data);
+      alert("Cliente cadastrado com sucesso!");
+    } catch(e) {
+      alert("CPF já cadastrado!");
+    }
   }
 
   handleChange(e) {
@@ -83,6 +98,7 @@ class Clients extends Component {
           <label>E-mail:  </label>
           <input type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
           <br></br>
+          <input type="button" value="Consultar" onClick={this.verifyClient}></input>
           <input type="button" value="Cadastrar" onClick={this.registerClient}></input>
         </div>
         </Card>
