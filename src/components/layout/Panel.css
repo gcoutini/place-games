@@ -1,11 +1,23 @@
 .Panel {
-    font-family: 'BenchNine';
-    flex: 1;
-    overflow: hidden;
+    grid-area: PA;
+    padding-left: 20px;
+    border-right: 1px solid #000000;
     background-color: limegreen;
-    position: fixed;
-    left: 0;
-    height: 100%;
-    width: 15%;
-    line-height: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    width: 35px;
+}
+
+.links {
+    align-items: center;
+    margin: 10px 0;
+    opacity: .7;
+    transition: opacity .3s;
+}
+
+.links::hover {
+    opacity: 1;
 }

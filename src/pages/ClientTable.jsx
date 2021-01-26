@@ -12,17 +12,23 @@ import Panel from "../components/layout/Panel"
 import Card from "../components/layout/Card"
 import Table from "../components/layout/Table"
 
-class Clients extends Component {
+class ClientTable extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      birth_date: "",
-      cpf: "",
-      tel: "",
-      cel: "",
-      email: "",
+      data: [
+        { title: "Love Letter", publisher: "Galápagos Jogos", nOfPlayers: "2-6", available: true },
+        { title: "Dominion", publisher: "Paper Games", nOfPlayers: "4", available: true },
+        { title: "River Dragon", publisher: "Conclave", nOfPlayers: "6", available: true },
+        { title: "Exploding Kittens", publisher: "Galápagos Jogos", nOfPlayers: "4", available: true }
+      ],
+      columns: [
+        { title: "Nome", field: 'name' },
+        { title: "Data de Nascimento", field: 'birth_date' },
+        { title: "CPF", field: 'cpf' },
+        { title: "Telefone", field: 'tel' },
+      ]
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -67,32 +73,23 @@ class Clients extends Component {
 
   render() {
     return (
-      <Card className="content">Clientes
-      <div className = "form-register-client">
-        <label>Nome:  </label>
-        <input type="text" name="name" value={this.state.name} onChange={this.handleChange}/>
-        <br></br>
-        <label>Data de Nascimento:  </label>
-        <input type="text" name="birth_date" value={this.state.birth_date} onChange={this.handleChange}/>
-        <br></br>
-        <label>*CPF:  </label>
-        <input type="text" name="cpf" value={this.state.cpf} onChange={this.handleChange}/>
-        <br></br>
-        <label>Telefone Fixo ou Comercial:  </label>
-        <input type="text" name="tel" value={this.state.tel} onChange={this.handleChange}/>
-        <br></br>
-        <label>Telefone Celular:  </label>
-        <input type="text" name="cel" value={this.state.cel} onChange={this.handleChange}/>
-        <br></br>
-        <label>E-mail:  </label>
-        <input type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
-        <br></br>
-        <input type="button" value="Consultar" onClick={this.verifyClient}></input>
-        <input type="button" value="Cadastrar" onClick={this.registerClient}></input>
+      <div>
+        <Header>
+          <img className ="logo" src={logo} alt="Logo"></img>
+          <div className="avatar"><Avatar src={profile}></Avatar></div>
+        </Header>  
+        <Panel>
+          <ol className="icon-list">
+            <IconButton onClick={() => window.location.href = "/main"}><Home></Home>Home</IconButton>
+            <IconButton onClick={() => window.location.href = "/clients"}><People></People>Clientes</IconButton>
+            <IconButton onClick={() => window.location.href = "/products"}><Delete></Delete>Produtos</IconButton>
+            <IconButton onClick={() => window.location.href = "/stock"}><Delete></Delete>Estoque</IconButton>
+            <IconButton onClick={() => window.location.href = "/data"}><BarChart></BarChart>Dados</IconButton>
+          </ol>
+        </Panel>
       </div>
-      </Card>
-      )
+     )
     }
   }
 
-export default Clients;
+export default ClientTable;
