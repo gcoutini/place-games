@@ -9,8 +9,6 @@ import profile from "../pp.jpg"
 import { IconButton } from '@material-ui/core';
 import { Home, People, BarChart, Delete } from '@material-ui/icons'
 import Panel from "../components/layout/Panel"
-import Card from "../components/layout/Card"
-import Table from "../components/layout/Table"
 
 class ClientTable extends Component {
 

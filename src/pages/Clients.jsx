@@ -1,17 +1,13 @@
 
 import React, { Component } from 'react';
-import Header from '../components/layout/Header'
 import { post } from 'axios'
 import "./Clients.css"
-import logo from "../logo2.png"
-import Avatar from '@material-ui/core/Avatar';
-import profile from "../pp.jpg"
-import { IconButton } from '@material-ui/core';
-import { Home, People, BarChart, Delete } from '@material-ui/icons'
-import Panel from "../components/layout/Panel"
+import { TextField } from '@material-ui/core';
 import Card from "../components/layout/Card"
-import Table from "../components/layout/Table"
-
+import InputMask from 'react-input-mask'
+import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 class Clients extends Component {
 
   constructor(props) {
@@ -29,7 +25,6 @@ class Clients extends Component {
 
   verifyClient = async e => {
     e.preventDefault();
-    console.log(this.state);
     const { name, cpf } = this.state;
     const { data } = await post('http://localhost:8000/verify_client', {
       name, cpf
@@ -68,27 +63,91 @@ class Clients extends Component {
   render() {
     return (
       <Card className="content">Clientes
+      <br></br>
+      <br></br>
       <div className = "form-register-client">
-        <label>Nome:  </label>
-        <input type="text" name="name" value={this.state.name} onChange={this.handleChange}/>
+        <TextField
+          InputProps={{ style: { color: 'white', width: '360px' }}}
+          required
+          name="name"
+          label="Nome"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.name}
+          size="small" 
+          />
         <br></br>
-        <label>Data de Nascimento:  </label>
-        <input type="text" name="birth_date" value={this.state.birth_date} onChange={this.handleChange}/>
         <br></br>
-        <label>*CPF:  </label>
-        <input type="text" name="cpf" value={this.state.cpf} onChange={this.handleChange}/>
+        <InputMask
+          mask="99/99/9999"
+          value={this.state.birth_date}
+          disabled={false}
+          maskChar="_"
+          onChange={this.handleChange}
+        >{() => <TextField required name="birth_date" label="Data de Nascimento" variant="outlined" size="small" InputProps={{ style: { color: 'white', width: "180px" }}}/>}
+        </InputMask>
         <br></br>
-        <label>Telefone Fixo ou Comercial:  </label>
-        <input type="text" name="tel" value={this.state.tel} onChange={this.handleChange}/>
         <br></br>
-        <label>Telefone Celular:  </label>
-        <input type="text" name="cel" value={this.state.cel} onChange={this.handleChange}/>
+        <InputMask
+          mask="999.999.999-99"
+          value={this.state.cpf}
+          disabled={false}
+          maskChar="_"
+          onChange={this.handleChange}
+        >{() => <TextField required name="cpf" label="CPF" variant="outlined" size="small" InputProps={{ style: { color: 'white', width: '150px' }}}/>}
+        </InputMask>
         <br></br>
-        <label>E-mail:  </label>
-        <input type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
         <br></br>
-        <input type="button" value="Consultar" onClick={this.verifyClient}></input>
-        <input type="button" value="Cadastrar" onClick={this.registerClient}></input>
+        <InputMask
+          mask="(99) 9999-9999"
+          value={this.state.tel}
+          disabled={false}
+          maskChar="_"
+          onChange={this.handleChange}
+        >{() => <TextField required name="tel" label="Telefone Fixo" variant="outlined" size="small" InputProps={{ style: { color: 'white', width: '160px' }}}/>}
+        </InputMask>
+        <br></br>
+        <br></br>
+        <InputMask
+          mask="(99) 99999-9999"
+          value={this.state.cel}
+          disabled={false}
+          maskChar="_"
+          onChange={this.handleChange}
+        >{() => <TextField required name="cel" label="Celular" variant="outlined" size="small" InputProps={{ style: { color: 'white', width: '160px' }}}/>}
+        </InputMask>
+        <br></br>
+        <br></br>
+        <TextField
+          required
+          name="email"
+          label="E-mail"
+          variant="outlined"
+          onChange={this.handleChange}
+          value={this.state.email}
+          InputProps={{ style: { color: 'white', width: '250px'}}}
+          size="small" 
+        />
+        <br></br>
+        <br></br>
+        <div className='buttons'>
+        <Button         
+          variant="contained"
+          startIcon={<SearchIcon/>}
+          onClick={this.verifyClient}>
+            Procurar
+        </Button>
+        &nbsp;&nbsp;&nbsp; 
+        <Button         
+          variant="contained"
+          startIcon={<AddCircleIcon/>}
+          onClick={this.registerClient}>
+            CADASTRAR
+        </Button>
+
+          {/* <input type="button" value="Consultar" onClick={this.verifyClient}></input>
+          <input type="button" value="Cadastrar" onClick={this.registerClient}></input> */}
+        </div>
       </div>
       </Card>
       )
