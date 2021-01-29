@@ -5,5 +5,10 @@
     align-items: center;
     padding: 0 10px;
     border-bottom: 1px solid #000;
-    background-color: yellow;
+    background-color: limegreen;
+    border-style: none;
+}
+
+.avatar {
+    margin-left: 95%;
 }
