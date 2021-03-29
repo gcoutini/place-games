@@ -156,8 +156,8 @@ class Clients extends Component {
               value={this.state.cep}
               disabled={false}
               maskChar="_"
+              onBlur={this.getCep}
               onChange={this.handleChange}
-              //onChange={async function(e) {this.handleChange(e); await this.getCep(e)}.bind(this)}
             >{() => <TextField required name="cep" label="CEP" variant="outlined" size="small" InputProps={{ style: { color: 'white', width: "180px" }}}/>}
           </InputMask>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -229,13 +229,6 @@ class Clients extends Component {
             startIcon={<SearchIcon/>}
             onClick={this.verifyClient}>
               Procurar
-          </Button>
-          &nbsp;&nbsp;&nbsp; 
-          <Button         
-            variant="contained"
-            startIcon={<SearchIcon/>}
-            onClick={this.getCep}>
-              CARREGAR CEP
           </Button>
           &nbsp;&nbsp;&nbsp; 
           <Button         
