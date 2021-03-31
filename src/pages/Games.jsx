@@ -1,32 +1,30 @@
-
 import React, { Component } from 'react';
-import { get } from 'axios';
-import "./Clients.css";
-import MaterialTable from "material-table";
 import Layout from "../components/layout/Layout";
+import { get } from 'axios';
+import MaterialTable from "material-table";
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-class ClientTable extends Component {
+class Games extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       data: [],
       columns: [
-        { title: "Nome", field: 'name' },
-        { title: "CPF", field: 'cpf' },
-        { title: "Celular", field: 'cel' },
+        { title: "Título", field: 'title' },
+        { title: "Nº de Jogadores", field: 'players_number' },
+        { title: "Disponível?", field: 'available' }
       ]
     };
   }
 
   async componentDidMount() {
-    await this.loadCustomers();
+    await this.loadGames();
   }
   
-  loadCustomers = async () => {
-    const { data } = await get('http://localhost:8000/load_customers');
+  loadGames = async () => {
+    const { data } = await get('http://localhost:8000/load_games');
     this.setState({data});
     return data;
   }
@@ -35,21 +33,23 @@ class ClientTable extends Component {
     let path = `/main/`;
     this.history.push(path);
   }
-  
+
   render() {
     return (
       <Layout>
-        <MaterialTable title="Consulta de Clientes" data={this.state.data} columns={this.state.columns}/>
+        <MaterialTable title="Consulta de Jogos" data={this.state.data} columns={this.state.columns}/>
         <br></br>
         <Button         
           variant="contained"
           startIcon={<AddCircleIcon/>}
-          onClick={() => window.location.href = "/clients/new"}>
-            NOVO CLIENTE
+          onClick={() => window.location.href = "/games/new"}>
+            NOVO JOGO
         </Button>
       </Layout>
-     )
+      )
     }
   }
 
-export default ClientTable;
+export default Games;
+
+
