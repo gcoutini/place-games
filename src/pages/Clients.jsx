@@ -69,10 +69,14 @@ class Clients extends Component {
 
   updateInfo = async (event, value) => {
     await this.setState(value);
-    let { data } = await post('http://localhost:8000/load_rent', {
-      cpf: this.state.cpf
-    });
-    await this.setState({data_table: data});
+    const moment = require('moment');
+    for(let i=0; i <= value.rentals.length-1; i++) {
+      let format_take = moment(value.rentals[i].rent_date).format('DD/MM/YYYY')
+      value.rentals[i].rent_date = format_take;
+      let format_return = moment(value.rentals[i].return_date).format('DD/MM/YYYY');
+      value.rentals[i].return_date = format_return;
+    }
+    await this.setState({data_table: value.rentals});
   }
 
   registerClient = async e => {
@@ -125,6 +129,7 @@ class Clients extends Component {
     let { data } = await get('http://localhost:8000/load_customers');
     data = data.sort((a, b) => (a.name > b.name) ? 1 : -1);
     this.setState({data});
+    console.log(this.state);
   }
   
 
