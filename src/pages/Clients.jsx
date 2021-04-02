@@ -2,13 +2,15 @@
 import React, { Component } from 'react';
 import { post, get } from 'axios'
 import { TextField } from '@material-ui/core';
-import Card from "../components/layout/Card"
 import Layout from "../components/layout/Layout"
 import InputMask from 'react-input-mask'
 import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import SearchIcon from '@material-ui/icons/Search';
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
+import { IconButton } from '@material-ui/core';
+import MaterialTable from "material-table";
 class Clients extends Component {
 
   constructor(props) {
@@ -26,7 +28,17 @@ class Clients extends Component {
       complement: "",
       bairro: "",
       localidade: "",
-      uf: ""
+      uf: "",
+      data_table: [],
+      columns: [
+        { title: "Cliente", field: 'client' },
+        { title: "CPF", field: 'cpf'},
+        { title: "Título", field: 'title'},
+        { title: "Data da Locação", field: 'rent_date'},
+        { title: "Data de Retorno", field: 'return_date'},
+        { title: "Dias de Locação", field: 'rental_days'},
+        { title: "Preço", field: 'price'},
+      ]
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -51,9 +63,16 @@ class Clients extends Component {
     const { data } = await post('http://localhost:8000/verify_client', {
       name, cpf
     });
-    console.log(data);
     this.setState(data);
     return data;
+  }
+
+  updateInfo = async (event, value) => {
+    await this.setState(value);
+    let { data } = await post('http://localhost:8000/load_rent', {
+      cpf: this.state.cpf
+    });
+    await this.setState({data_table: data});
   }
 
   registerClient = async e => {
@@ -66,9 +85,29 @@ class Clients extends Component {
       });
       console.log(data);
       alert("Cliente cadastrado com sucesso!");
+      this.componentDidMount();
+      this.clearState();
     } catch(e) {
       alert("CPF já cadastrado!");
     }
+  }
+
+  clearState = () => {
+    this.setState({
+      name: "",
+      birth_date: "",
+      cpf: "",
+      tel: "",
+      cel: "",
+      email: "",
+      cep: "",
+      logradouro: "",
+      house_number: "",
+      complement: "",
+      bairro: "",
+      localidade: "",
+      uf: ""
+    });
   }
 
   handleChange(e) {
@@ -82,13 +121,27 @@ class Clients extends Component {
     this.history.push(path);
   }
 
+  async componentDidMount() {
+    let { data } = await get('http://localhost:8000/load_customers');
+    data = data.sort((a, b) => (a.name > b.name) ? 1 : -1);
+    this.setState({data});
+  }
+  
+
   render() {
     return (
       <Layout>
-        <Card className="content">Clientes
-        <br></br>
-        <br></br>
         <div className = "form-register-client">
+            <Autocomplete
+              name="search"
+              id="customers-search"
+              options={this.state.data}
+              getOptionLabel={(option) => option.name}
+              onChange={this.updateInfo}
+              style={{ color: 'white', width: 300 }}
+              renderInput={(params) => <TextField {...params} label="Buscar" variant="outlined"/>}
+            />
+            <br></br>
             <TextField
               InputProps={{ style: { color: 'white', width: '360px' }}}
               required
@@ -119,6 +172,11 @@ class Clients extends Component {
               onChange={this.handleChange}
             >{() => <TextField required name="cpf" label="CPF" variant="outlined" size="small" InputProps={{ style: { color: 'white', width: '150px' }}}/>}
             </InputMask>
+            <IconButton         
+              variant="contained"
+              onClick={this.verifyClient}>
+              <SearchIcon></SearchIcon>
+            </IconButton>
             <br></br>
             <br></br>
             <InputMask
@@ -228,13 +286,6 @@ class Clients extends Component {
             <div className='buttons'>
             <Button         
               variant="contained"
-              startIcon={<SearchIcon/>}
-              onClick={this.verifyClient}>
-                Procurar
-            </Button>
-            &nbsp;&nbsp;&nbsp; 
-            <Button         
-              variant="contained"
               startIcon={<AddCircleIcon/>}
               onClick={this.registerClient}>
                 CADASTRAR
@@ -242,13 +293,14 @@ class Clients extends Component {
             &nbsp;&nbsp;&nbsp; 
             <Button         
               variant="contained"
-              startIcon={<ArrowBack/>}
-              onClick={() => window.location.href = "/clients"}>
-                VOLTAR
+              startIcon={<ClearAllIcon/>}
+              onClick={(this.clearState)}>
+                LIMPAR
             </Button>
           </div>
         </div>
-        </Card>
+        <br></br>
+        <MaterialTable title="Histórico do Cliente" data={this.state.data_table} columns={this.state.columns} options={{ paging:false }}/>
       </Layout>
       )
     }

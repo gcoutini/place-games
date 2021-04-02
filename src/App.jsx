@@ -4,8 +4,8 @@ import Login from './pages/Login';
 import Games from './pages/Games';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Clients from './pages/Clients';
-import ClientTable from './pages/ClientTable';
 import AddGame from './pages/AddGame';
+import Rent from './pages/Rent';
 
 class App extends Component {
 
@@ -15,10 +15,10 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={Login}/>
             <Route path="/main" component={Main}/>
-            <Route path="/clients/new" component={Clients}/>
-            <Route path="/clients" component={ClientTable}/>
+            <Route path="/clients" component={Clients}/>
             <Route path="/games/new" component={AddGame}/>
             <Route path="/games" component={Games}/>
+            <Route path="/rent" component={Rent}/>
           </Switch>
         </Router>
     )

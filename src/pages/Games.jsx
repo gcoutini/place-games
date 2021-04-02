@@ -24,9 +24,13 @@ class Games extends Component {
   }
   
   loadGames = async () => {
-    const { data } = await get('http://localhost:8000/load_games');
+    let { data } = await get('http://localhost:8000/load_games');
+    data.map(d => { 
+      if (d.available) return d.available = "✅";
+      return d.available = "❌"
+    })
+    data = data.sort((a, b) => (a.title > b.title) ? 1 : -1);
     this.setState({data});
-    return data;
   }
 
   routeChange = () => {
