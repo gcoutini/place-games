@@ -305,7 +305,7 @@ class Clients extends Component {
           </div>
         </div>
         <br></br>
-        <MaterialTable title="Histórico do Cliente" data={this.state.data_table} columns={this.state.columns} options={{ paging:false }}/>
+        <MaterialTable title="Histórico do Cliente" data={this.state.data_table} columns={this.state.columns} options={{ paging:false }} localization={{ body: { emptyDataSourceMessage: 'Nenhum registro encontrado.' }}}/>
       </Layout>
       )
     }
