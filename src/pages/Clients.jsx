@@ -267,6 +267,8 @@ class Clients extends Component {
               onChange={this.handleChange}
             />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br></br>
+            <br></br>
             <TextField
               disabled
               name="localidade"

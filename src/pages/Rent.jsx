@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SendIcon from '@material-ui/icons/Send';
 import InputMask from 'react-input-mask'
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 class Rent extends Component {
 
@@ -22,10 +24,12 @@ class Rent extends Component {
       return_date: "",
       price: "",
       players_number: "",
-      available: ""
+      available: "",
+      paidFor: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
+  
   
   async componentDidMount() {
     let { data: data_games } = await get('http://localhost:8000/load_games');
@@ -53,6 +57,12 @@ class Rent extends Component {
     });
   }
 
+  handleChangeCB = (e) => {
+    this.setState({
+      [e.target.name]: e.target.checked
+    });
+  };
+
   routeChange = () => {
     let path = `/main/`;
     this.history.push(path);
@@ -64,11 +74,11 @@ class Rent extends Component {
     const rent_date = moment().format()
     const return_date = moment().add(this.state.rental_days, 'd').format()
     await this.setState({ rent_date: rent_date, return_date: return_date })
-    console.log(this.state);
-    const { client, title, cpf, rental_days, price } = this.state;
+    const { client, title, cpf, rental_days, price, paidFor} = this.state;
+    console.log("THIS STATE AQUI", this.state);
     try {
       const { data } = await post('http://localhost:8000/new_rent', {
-        client, title, cpf, rent_date, return_date, rental_days, price
+        client, title, cpf, rent_date, return_date, rental_days, price, paidFor
       });
       console.log(data);
       alert("Aluguel cadastrado com sucesso!");
@@ -148,6 +158,12 @@ class Rent extends Component {
         InputProps={{
           startAdornment: <InputAdornment position="start">R$</InputAdornment>,
         }}
+      />
+      <br></br>
+      <br></br>
+      <FormControlLabel
+        control={<Checkbox checked={this.state.paidFor} onChange={this.handleChangeCB} name="paidFor" />}
+        label="Pagamento na retirada?"
       />
       <br></br>
       <br></br>
