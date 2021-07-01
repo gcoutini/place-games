@@ -1,9 +1,21 @@
 import './Header.css'
-import React from 'react'
+import React, { Component } from 'react'
+import Avatar from '@material-ui/core/Avatar';
+import profile from "../../pp.jpg"
 
-export default props =>
-  <div className={props.className || "Header"}>
-    <div className="header-content">
-      {props.children}       
-    </div>
-  </div>
+class Header extends Component {
+  
+  // constructor(props) {
+  //   super(props);
+  // }
+
+  render() {
+    return(
+      <div className="Header">
+        <div className="avatar"><Avatar src={profile}></Avatar></div>       
+      </div>
+    )
+  }
+}
+
+export default Header;

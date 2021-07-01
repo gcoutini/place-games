@@ -18,12 +18,11 @@ class Login extends Component {
 
   sendLogin = async e => {
     e.preventDefault();
-    console.log(this.state);
     const { login, password } = this.state;
     const { data } = await post('http://localhost:8000/login', {
       login, password
     });
-    console.log(data);
+    localStorage.setItem("token", data.token);
     return window.location.href = "/main"
   }
 
@@ -42,10 +41,10 @@ class Login extends Component {
     });
   }
 
-  routeChange = () => {
-    let path = `/main/`;
-    this.history.push(path);
-  }
+  // routeChange = () => {
+  //   let path = `/main/`;
+  //   this.history.push(path);
+  // }
 
   render() {
     return (       
