@@ -76,14 +76,19 @@ class Rent extends Component {
     const return_date = moment().add(this.state.rental_days, 'd').format()
     await this.setState({ rent_date: rent_date, return_date: return_date })
     const { client, title, cpf, rental_days, price, paidFor} = this.state;
-    try {
-      const { data } = await post('http://localhost:8000/new_rent', {
-        client, title, cpf, rent_date, return_date, rental_days, price, paidFor
-      });
-      console.log(data);
-      alert("Aluguel cadastrado com sucesso!");
-    } catch(e) {
-      alert("Erro ao registrar aluguel!");
+    const emptyFields = Object.keys(this.state).filter(key => this.state[key] === "");
+    if (emptyFields.length > 2) {
+      alert("Preencha todos os campos!");
+    } else {
+        try {
+          const { data } = await post('http://localhost:8000/new_rent', {
+            client, title, cpf, rent_date, return_date, rental_days, price, paidFor
+          });
+          console.log(data);
+          alert("Aluguel cadastrado com sucesso!");
+        } catch(e) {
+          alert("Erro ao registrar aluguel!");
+        }
     }
   }
 
@@ -127,10 +132,11 @@ class Rent extends Component {
       getOptionLabel={(option) => option.title}
       onChange={(event, value) => this.setState( {title: value.title} )}
       style={{ color: 'white', width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Jogo" variant="outlined"/>}
+      renderInput={(params) => <TextField {...params} required label="Jogo" variant="outlined"/>}
       />
       <br></br>
       <TextField
+        required
         id="rental_days"
         name="rental_days"
         label="Dias de Locação"
@@ -145,6 +151,7 @@ class Rent extends Component {
       <br></br>
       <br></br>
       <TextField
+        required
         id="price"
         name="price"
         label="Valor"
