@@ -81,18 +81,26 @@ class Clients extends Component {
 
   registerClient = async e => {
     e.preventDefault();
-    console.log("Register:", this.state);
     const { name, birth_date, cpf, tel, cel, email, cep, logradouro, house_number, complement, bairro, localidade, uf } = this.state;
-    try {
-      const { data } = await post('http://localhost:8000/register_client', {
-        name, birth_date,cpf, tel, cel, email, cep, logradouro, house_number, complement, bairro, localidade, uf 
-      });
-      console.log(data);
-      alert("Cliente cadastrado com sucesso!");
-      this.componentDidMount();
-      this.clearState();
-    } catch(e) {
-      alert("CPF já cadastrado!");
+    const emptyFields = Object.keys(this.state).filter(key => this.state[key] === '');
+    const mandatoryFields = [
+      'name', 'birth_date', 'cpf', 'cel', 'cep', 'logradouro', 'house_number', 'bairro', 'localidade', 'uf'
+    ];
+    const isInfoValid = !emptyFields.find(field => mandatoryFields.includes(field));
+    if (!isInfoValid) {
+      alert("Preencha todos os campos obrigatórios!");
+    } else {
+        try {
+          const { data } = await post('http://localhost:8000/register_client', {
+            name, birth_date,cpf, tel, cel, email, cep, logradouro, house_number, complement, bairro, localidade, uf 
+          });
+          console.log(data);
+          alert("Cliente cadastrado com sucesso!");
+          this.componentDidMount();
+          this.clearState();
+        } catch(e) {
+          alert("CPF já cadastrado!");
+        }
     }
   }
 
@@ -190,7 +198,7 @@ class Clients extends Component {
               disabled={false}
               maskChar="_"
               onChange={this.handleChange}
-            >{() => <TextField required name="tel" label="Telefone Fixo" variant="outlined" size="small" InputProps={{ style: { color: 'white', width: '160px' }}}/>}
+            >{() => <TextField name="tel" label="Telefone Fixo" variant="outlined" size="small" InputProps={{ style: { color: 'white', width: '160px' }}}/>}
             </InputMask>
             <br></br>
             <br></br>
@@ -205,7 +213,6 @@ class Clients extends Component {
             <br></br>
             <br></br>
             <TextField
-              required
               name="email"
               label="E-mail"
               variant="outlined"
