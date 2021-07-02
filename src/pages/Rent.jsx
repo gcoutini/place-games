@@ -26,6 +26,7 @@ class Rent extends Component {
       players_number: "",
       available: "",
       paidFor: false,
+      data_games: []
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -75,7 +76,6 @@ class Rent extends Component {
     const return_date = moment().add(this.state.rental_days, 'd').format()
     await this.setState({ rent_date: rent_date, return_date: return_date })
     const { client, title, cpf, rental_days, price, paidFor} = this.state;
-    console.log("THIS STATE AQUI", this.state);
     try {
       const { data } = await post('http://localhost:8000/new_rent', {
         client, title, cpf, rent_date, return_date, rental_days, price, paidFor
