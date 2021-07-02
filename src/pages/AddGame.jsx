@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 class AddGame extends Component {
 
@@ -16,15 +18,15 @@ class AddGame extends Component {
     this.state = {
       title: "",
       players_number: "",
-      available: "",
+      available: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   registerGame = async e => {
     e.preventDefault();
-    console.log("Register:", this.state);
     const { title, players_number, available } = this.state;
+    console.log(this.state);
     try {
       const { data } = await post('http://localhost:8000/register_game', {
         title, players_number, available 
@@ -41,6 +43,12 @@ class AddGame extends Component {
       [e.target.name]: e.target.value
     });
   }
+
+  handleChangeCB = (e) => {
+    this.setState({
+      [e.target.name]: e.target.checked
+    });
+  };
 
   routeChange = () => {
     let path = `/main/`;
@@ -78,15 +86,9 @@ class AddGame extends Component {
             />
             <br></br>
             <br></br>
-            <TextField
-              required
-              name="available"
-              label="Disponível?"
-              variant="outlined"
-              value={this.state.available}
-              InputProps={{ style: { color: 'white', width: '120px'}}}
-              size="small" 
-              onChange={this.handleChange}
+            <FormControlLabel
+              control={<Checkbox checked={this.state.available} onChange={this.handleChangeCB} name="available" />}
+              label="Disponível para locação?"
             />
             <br></br>
             <br></br>
