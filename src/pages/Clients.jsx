@@ -38,7 +38,8 @@ class Clients extends Component {
         { title: "Data de Retorno", field: 'return_date'},
         { title: "Dias de Locação", field: 'rental_days'},
         { title: "Preço", field: 'price'},
-      ]
+      ],
+      data: []
     };
     this.handleChange = this.handleChange.bind(this);
   }
