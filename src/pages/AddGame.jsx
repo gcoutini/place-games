@@ -26,15 +26,19 @@ class AddGame extends Component {
   registerGame = async e => {
     e.preventDefault();
     const { title, players_number, available } = this.state;
-    console.log(this.state);
-    try {
-      const { data } = await post('http://localhost:8000/register_game', {
-        title, players_number, available 
-      });
-      console.log(data);
-      alert("Jogo cadastrado com sucesso!");
-    } catch(e) {
-      alert("Jogo já cadastrado!");
+    const isInfoValid = !title || !players_number ? false : true;
+    if (!isInfoValid) {
+      alert("Preencha todos os campos obrigatórios!")
+    } else {
+        try {
+          const { data } = await post('http://localhost:8000/register_game', {
+            title, players_number, available 
+          });
+          console.log(data);
+          alert("Jogo cadastrado com sucesso!");
+        } catch(e) {
+          alert("Jogo já cadastrado!");
+        }
     }
   }
 
